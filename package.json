@@ -1,4 +1,13 @@
 {
+  "name": "My Reads Web App",
+  "version": "0.0.1",
+  "description": "a react/local webapp used to search the myreads \"books\" api and add said books to several reading lists.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dahukish/my-reads-react"
+  },
+  "author": "S. Hukish <dahukish@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
