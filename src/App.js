@@ -13,7 +13,6 @@ class BooksApp extends React.Component {
 
   getBookList = (query) => {
     BooksAPI.search(query).then(response => {
-      console.log(response);
       if (response && response.length) {
         this.setState({
           bookList: response

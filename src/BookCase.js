@@ -53,8 +53,8 @@ class BookCase extends Component {
                     </Link>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default BookCase;
+export default BookCase

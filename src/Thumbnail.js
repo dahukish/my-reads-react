@@ -10,7 +10,7 @@ class Thumbnail extends Component {
 
     getThumbnail() {
 
-        let thumb;
+        let thumb
 
         if (this.props.imageInfo) {
             const { thumbnail } = this.props.imageInfo
@@ -28,4 +28,4 @@ class Thumbnail extends Component {
 
 }
 
-export default Thumbnail;
+export default Thumbnail

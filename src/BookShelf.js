@@ -20,4 +20,4 @@ BookShelf.propTypes = {
     faIcon: PropTypes.object.isRequired
 }
 
-export default BookShelf;
+export default BookShelf

@@ -20,11 +20,11 @@ class SearchBooks extends Component {
     updateQuery(query) {
         this.setState({
             query: query.trim()
+        }, () => {
+            if (this.state.query.length) {
+                this.props.onQueryApi(this.state.query)
+            }
         })
-
-        if (this.state.query.length) {
-            this.props.onQueryApi(this.state.query)
-        }
     }
 
     clearQuery() {
@@ -56,4 +56,4 @@ class SearchBooks extends Component {
     }
 }
 
-export default SearchBooks;
+export default SearchBooks

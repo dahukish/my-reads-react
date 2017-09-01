@@ -19,4 +19,4 @@ BookGrid.propTypes = {
     onShelfChange: PropTypes.func.isRequired
 }
 
-export default BookGrid;
+export default BookGrid
