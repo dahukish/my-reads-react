@@ -8,13 +8,18 @@ class BookCase extends Component {
 
     static propTypes = {
         bookList: PropTypes.array.isRequired,
+        onInit: PropTypes.func.isRequired,
         onShelfChange: PropTypes.func.isRequired
     }
 
     getBooksForShelf(shelfName) {
         return this.props.bookList.filter(book => {
-            return book.parentShelf && book.parentShelf === shelfName
+            return book.shelf && book.shelf === shelfName
         })
+    }
+
+    componentDidMount() {
+        this.props.onInit()
     }
 
     render() {

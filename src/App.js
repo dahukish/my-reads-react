@@ -11,28 +11,44 @@ class BooksApp extends React.Component {
     bookList: []
   }
 
+  updateBookList = (response) => {
+    if (response && response.length) {
+      this.setState({
+        bookList: response
+      })
+    }
+  }
+
+  getAllShelvedBooks = () => {
+    BooksAPI.getAll().then(response => {
+      this.updateBookList(response)
+    })
+  }
+
   getBookList = (query) => {
     BooksAPI.search(query).then(response => {
-      if (response && response.length) {
-        this.setState({
-          bookList: response
-        })
-      }
+      this.updateBookList(response)
     })
   }
 
   changeShelf = (book, newShelf) => {
     this.setState((state) => {
-      state.bookList = state.bookList.map(item => {
-        if (item.id === book.id) {
-          book.parentShelf = newShelf
-        }
-        return item
-      })
+      state.bookList = state.bookList
+        .filter(item => {
+          return item.shelf !== 'none'
+        })
+        .map(item => {
+          if (item.id === book.id) {
+            book.shelf = newShelf
+          }
+          return item
+        })
+    }, () => {
+      BooksAPI.update(book, newShelf)
     })
   }
 
-  resetBooks = ()=>{
+  resetBooks = () => {
     this.setState({
       bookList: []
     })
@@ -42,11 +58,11 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route path="/search" render={() => (
-          <SearchBooks onQueryApi={this.getBookList} bookList={this.state.bookList} onShelfChange={this.changeShelf} onCleanup={this.resetBooks}/>
+          <SearchBooks onQueryApi={this.getBookList} bookList={this.state.bookList} onShelfChange={this.changeShelf} onCleanup={this.resetBooks} />
         )}
         />
         <Route exact path="/" render={() => (
-          <BookCase bookList={this.state.bookList} onShelfChange={this.changeShelf} />
+          <BookCase bookList={this.state.bookList} onInit={this.getAllShelvedBooks} onShelfChange={this.changeShelf} />
         )}
         />
       </div>
