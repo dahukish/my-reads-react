@@ -60,10 +60,19 @@ class BooksApp extends React.Component {
   saveToShelfFromSearch = (book, newShelf) => {
     BooksAPI.update(book, newShelf).then(response => {
       this.setState(state => ({
-        bookList: state.bookList.concat([book])
+        bookList: state.bookList.filter(item => {
+          return item.id !== book.id
+        }).concat([book])
+        ,
+        searchResults: state.searchResults
+        .map(item => {
+          if (item.id === book.id) {
+            book.shelf = newShelf
+          }
+          return item
+        })
       }))
     })
-
   }
 
   resetBooks = () => {
