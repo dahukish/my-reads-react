@@ -8,49 +8,67 @@ import BookCase from './BookCase'
 class BooksApp extends React.Component {
 
   state = {
-    bookList: []
-  }
-
-  updateBookList = (response) => {
-    if (response && response.length) {
-      this.setState({
-        bookList: response
-      })
-    }
+    bookList: [],
+    searchResults: []
   }
 
   getAllShelvedBooks = () => {
     BooksAPI.getAll().then(response => {
-      this.updateBookList(response)
+      if (response && response.length) {
+        this.setState({
+          bookList: response
+        })
+      }
     })
   }
 
   getBookList = (query) => {
     BooksAPI.search(query).then(response => {
-      this.updateBookList(response)
+      if (response && response.length) {
+        this.state.bookList.forEach((book, index) => {
+          const responseBook = response.find((element) => {
+            return element.id === book.id
+          })
+          if (responseBook) {
+            responseBook.shelf = book.shelf
+          }
+        })
+        this.setState({
+          searchResults: response
+        })
+      }
     })
   }
 
   changeShelf = (book, newShelf) => {
-    this.setState((state) => {
-      state.bookList = state.bookList
-        .filter(item => {
-          return item.shelf !== 'none'
-        })
-        .map(item => {
-          if (item.id === book.id) {
-            book.shelf = newShelf
-          }
-          return item
-        })
-    }, () => {
-      BooksAPI.update(book, newShelf)
+    BooksAPI.update(book, newShelf).then(response => {
+      this.setState((state) => {
+        state.bookList = state.bookList
+          .filter(item => {
+            return item.shelf !== 'none'
+          })
+          .map(item => {
+            if (item.id === book.id) {
+              book.shelf = newShelf
+            }
+            return item
+          })
+      })
     })
+  }
+
+  saveToShelfFromSearch = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(response => {
+      this.setState(state => ({
+        bookList: state.bookList.concat([book])
+      }))
+    })
+
   }
 
   resetBooks = () => {
     this.setState({
-      bookList: []
+      searchResults: []
     })
   }
 
@@ -58,7 +76,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route path="/search" render={() => (
-          <SearchBooks onQueryApi={this.getBookList} bookList={this.state.bookList} onShelfChange={this.changeShelf} onCleanup={this.resetBooks} />
+          <SearchBooks onQueryApi={this.getBookList} bookList={this.state.searchResults} onShelfChange={this.saveToShelfFromSearch} onCleanup={this.resetBooks} />
         )}
         />
         <Route exact path="/" render={() => (

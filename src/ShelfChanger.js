@@ -5,7 +5,7 @@ const ShelfChanger = (props) => {
 
     return (
         <div className="book-shelf-changer">
-            <select value={props.book.shelf} onChange={(event) => props.onShelfChange(props.book, event.target.value)}>
+            <select value={props.book.shelf || 'none'} onChange={(event) => props.onShelfChange(props.book, event.target.value)}>
                 <option value="none">Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>

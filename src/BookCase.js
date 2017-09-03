@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import BookShelf from './BookShelf'
+import CurrentlyReading from './CurrentlyReading'
+import WantToRead from './WantToRead'
+import Read from './Read'
 
 class BookCase extends Component {
 
@@ -30,25 +32,17 @@ class BookCase extends Component {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        <BookShelf
-                            title={'Currently Reading'}
+                        <CurrentlyReading
                             bookList={this.getBooksForShelf('currentlyReading')}
                             onShelfChange={this.props.onShelfChange}
-                            faIcon={<FontAwesome name="book" />}
                         />
-
-                        <BookShelf
-                            title={'Want to Read'}
+                        <WantToRead
                             bookList={this.getBooksForShelf('wantToRead')}
                             onShelfChange={this.props.onShelfChange}
-                            faIcon={<FontAwesome name="bookmark" />}
                         />
-
-                        <BookShelf
-                            title={'Read'}
+                        <Read
                             bookList={this.getBooksForShelf('read')}
                             onShelfChange={this.props.onShelfChange}
-                            faIcon={<FontAwesome name="check-square-o" />}
                         />
                     </div>
                 </div>

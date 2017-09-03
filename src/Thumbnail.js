@@ -14,9 +14,9 @@ class Thumbnail extends Component {
 
         if (this.props.imageInfo) {
             const { thumbnail } = this.props.imageInfo
-            thumb = <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${thumbnail}")` }}></div>
+            thumb = <div className="book-cover" style={{ backgroundImage: `url("${thumbnail}")` }}></div>
         } else {
-            thumb = <div className="book-cover" style={{ width: 128, height: 193 }}><FontAwesome name="newspaper-o" size="4x" /></div>
+            thumb = <div className="book-cover"><FontAwesome name="newspaper-o" size="4x" /></div>
         }
 
         return thumb
